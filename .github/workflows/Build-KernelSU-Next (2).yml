@@ -1,4 +1,4 @@
-name: Build OnePlus_Kernel默认Ace3
+name: Build OnePlus_Kernel默认Ace3v
 on:
   workflow_dispatch:
     inputs:
@@ -256,7 +256,7 @@ jobs:
          cd kernel_workspace
          LTO=thin ./kernel_platform/oplus/build/oplus_build_kernel.sh ${{ github.event.inputs.CPUD }} gki
          
-      - name: Make AnyKernel3
+      - name: Make kernel
         run: |
          git clone https://github.com/Kernel-SU/AnyKernel3 --depth=1
          cp kernel_workspace/kernel_platform/out/msm-kernel-${{ github.event.inputs.CPUD }}-gki/dist/Image ./kernel_workspace/kernel
