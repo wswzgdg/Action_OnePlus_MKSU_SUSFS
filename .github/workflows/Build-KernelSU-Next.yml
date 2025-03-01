@@ -1,31 +1,31 @@
-name: Build OnePlus_Kernel默认Ace3
+name: Build OnePlus_Kernel
 on:
   workflow_dispatch:
     inputs:
       CPU:
         description: "分支"
         required: true
-        default: 'sm8550'
+        default: 'sm8650'
       FEIL:
         description: "配置文件"
         required: true
-        default: 'oneplus_ace3_v'
+        default: 'oneplus_ace3_pro_v'
       CPUD:
         description: "处理器代号"
         required: true
-        default: 'kalama'
+        default: 'pineapple'
       ANDROID_VERSION:
         description: "内核安卓版本"
         required: true
-        default: 'android13'
+        default: 'android14'
       KERNEL_VERSION:
         description: "内核版本"
         required: true
-        default: '5.15'
+        default: '6.1'
       KERNEL_NAME:
         description: "修改内核名称"
         required: true
-        default: '-android13-8-o-g8e590a27cb79-我是我自己的狗'
+        default: '-android14-11-o-g1132d864665d'
       kernelsu_variant:
         description: "选择 KSU"
         required: true
