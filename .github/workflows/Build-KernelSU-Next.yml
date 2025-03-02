@@ -1,4 +1,4 @@
-name: Build OnePlus_Kernel
+name: Build OnePlus_Kernel默认Ace3
 on:
   workflow_dispatch:
     inputs:
@@ -25,7 +25,7 @@ on:
       KERNEL_NAME:
         description: "修改内核名称"
         required: true
-        default: '-IOS-op-我是我自己的狗胥枢'
+        default: '-IOS-op-ican0721'
       kernelsu_variant:
         description: "选择 KSU"
         required: true
@@ -245,13 +245,13 @@ jobs:
          sed -i "/stable_scmversion_cmd/s/-maybe-dirty//g" ./build/kernel/kleaf/impl/stamp.bzl
   
       - name: Build kernel
-        if: github.event.inputs.CPU =='sm8550' 
+        if: github.event.inputs.CPU == 'sm8550' 
         run: |
          cd kernel_workspace
          ./kernel_platform/build_with_bazel.py -t ${{ github.event.inputs.CPUD }} gki
           
       - name: Fallback build kernel
-        if: github.event.inputs.CPU !='sm8550' 
+        if: github.event.inputs.CPU != 'sm8550' 
         run: |
          cd kernel_workspace
          LTO=thin ./kernel_platform/oplus/build/oplus_build_kernel.sh ${{ github.event.inputs.CPUD }} gki
