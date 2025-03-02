@@ -195,23 +195,23 @@ jobs:
           cd kernel_platform
 
           # Copy SUSFS patches
-          cp ../susfs4ksu/kernel_patches/KernelSU/10_enable_susfs_for_ksu.patch ./KernelSU/
           cp ../susfs4ksu/kernel_patches/50_add_susfs_in_gki-${{ github.event.inputs.ANDROID_VERSION }}-${{ github.event.inputs.KERNEL_VERSION }}.patch ./common/
           cp ../susfs4ksu/kernel_patches/fs/* ./common/fs/
           cp ../susfs4ksu/kernel_patches/include/linux/* ./common/include/linux/
           cd ./KernelSU
           echo "正在给MKSU-SKN打susfs补丁"
-          patch -p1 --forward < 10_enable_susfs_for_ksu.patch || true
+          cp ./patch/* ./
+          patch --fuzz=3 -p1 < MKSU-SKN_susfs.patch || true
+          echo "nongki 修复补丁"
+          patch --fuzz=3 -p1 < nongki_fix.patch || true
+          echo "nongki sed 修复补丁"
+          chmod 777 nongki_fix.sh
+          ./nongki_fix.sh
+          
           echo "正在给内核打susfs补丁"
           cd ../common
           patch -p1 < 50_add_susfs_in_gki-${{ github.event.inputs.ANDROID_VERSION }}-${{ github.event.inputs.KERNEL_VERSION }}.patch || true
-          cd ../KernelSU
-          echo "正在打susfs修复补丁"
-          patch -p1 < mksu_susfs_fix.patch || true
-          echo "正在打nonGKI补丁"
-          patch -p1 < nongki_fix.patch || true 
-          chmod 777 fix_nongki.sh
-          ./fix_nongki.sh
+          
           echo "完成"
       - name: Apply SUSFS Patches RKSU
         if: ${{ (inputs.kernelsu_variant == 'RKSU') && github.event.inputs.SUSFS_ENABLED == 'true' }}
